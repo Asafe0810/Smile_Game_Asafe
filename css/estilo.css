@@ -1,37 +1,99 @@
-.invisivel{
-    display:none;
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* Oculta elementos */
+.invisivel {
+  display: none;
+}
+.visivel {
+  display: inline;
+}
+
+/* Estilo base das cartas */
+.inicial, .acertou, .errou {
+  text-align: center;
+  width: 150px;
+  height: 200px;
+  border: 10px solid green;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.img-carta {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Quando acerta */
+.acertou {
+  background-color: LawnGreen;
+  border-color: yellow;
+}
+
+/* Quando erra */
+.errou {
+  background-color: red;
+  border-color: black;
+}
+
+/* Efeito especial para vitória/derrota */
+#especial {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 0, 0.7);
+  z-index: 1000;
+  text-align: center;
+  font-size: 60px;
+  color: black;
+  padding-top: 20%;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Botão Reiniciar fica acima do especial para poder clicar */
+#reiniciar {
+  position: relative;
+  z-index: 1100;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
   }
-  .visivel{
-    display:inline;
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
   }
-  .inicial {
-    text-align: center;
-    font-size: 100px;
-    background-color: lightgrey;
-    width: 150px;
-    height: 200px;
-    border: 15px solid green;
-    padding: 10px;
-    margin: 20px;
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
   }
-  .acertou {
-    text-align: center;
-    color: yellow;
-    background-color: LawnGreen;
-    width: 150px;
-    height: 200px;
-    border: 15px solid yellow;
-    padding: 10px;
-    margin: 20px;
-  }
-  .errou {
-    text-align: center;
-    font-size: 100px;
-    color: white;
-    background-color: red;
-    width: 150px;
-    height: 200px;
-    border: 15px solid black;
-    padding: 10px;
-    margin: 20px;
-  }
+}
+
+.emoji.acerto-animado {
+  animation: pulse 0.6s ease-in-out 2;
+}
