@@ -9,6 +9,13 @@ const btnReiniciar = document.getElementById('reiniciar');
 const btnJogarNovamente = document.getElementById('joganovamente');
 const especial = document.getElementById('especial');
 
+// URLs das imagens para reutilização
+const IMAGENS = {
+  cartaPadrao: "https://veja.abril.com.br/wp-content/uploads/2020/02/apostas_esportiva_onlines-oee803dsbihgfdxk1c09q20xbi7ag51k80npcttet8.jpg?crop=1&resize=1212,909",
+  acerto: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg",
+  erro: "https://cdn-icons-png.flaticon.com/512/1828/1828665.png"
+};
+
 // Reinicia tudo
 function reiniciar() {
   desempenho = 0;
@@ -35,7 +42,7 @@ function jogarNovamente() {
 
     // Restaura estado inicial e imagem da carta
     carta.className = "inicial";
-    carta.innerHTML = `<img class="img-carta" src="https://veja.abril.com.br/wp-content/uploads/2020/02/apostas_esportiva_onlines-oee803dsbihgfdxk1c09q20xbi7ag51k80npcttet8.jpg?crop=1&resize=1212,909" alt="Carta">`;
+    carta.innerHTML = `<img class="img-carta" src="${IMAGENS.cartaPadrao}" alt="Carta">`;
   });
 
   atualizaPlacar(acertos, tentativas);
@@ -52,30 +59,29 @@ function atualizaPlacar(acertos, tentativas) {
     `Placar - Acertos: ${acertos} | Tentativas: ${tentativas} | Desempenho: ${Math.round(desempenho)}%`;
 }
 
-// Evento de acerto
-function acertou(obj) {
-  obj.className = "acertou";
+// Função auxiliar para atualizar o visual da carta
+function atualizaCarta(obj, tipo) {
+  // Remove a imagem da carta
   const imgCarta = obj.querySelector(".img-carta");
   if (imgCarta) imgCarta.remove();
 
+  // Cria e adiciona o novo emoji
   const img = new Image(100);
-  img.className = "emoji acerto-animado"; // classe com animação
-  img.src = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg";
+  img.className = tipo === 'acerto' ? 'emoji acerto-animado' : 'emoji';
+  img.src = tipo === 'acerto' ? IMAGENS.acerto : IMAGENS.erro;
   obj.appendChild(img);
 }
 
+// Evento de acerto
+function acertou(obj) {
+  obj.className = "acertou";
+  atualizaCarta(obj, 'acerto');
+}
 
 // Evento de erro
 function errou(obj) {
   obj.className = "errou";
-  // Remove a imagem da carta para mostrar só o emoji
-  const imgCarta = obj.querySelector(".img-carta");
-  if (imgCarta) imgCarta.remove();
-
-  const img = new Image(100);
-  img.className = "emoji";
-  img.src = "https://cdn-icons-png.flaticon.com/512/1828/1828665.png";
-  obj.appendChild(img);
+  atualizaCarta(obj, 'erro');
 }
 
 // Verificação do clique
